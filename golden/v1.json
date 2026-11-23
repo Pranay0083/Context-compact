@@ -1,0 +1,304 @@
+{
+  "version": "v1",
+  "description": "Multi-turn agent sessions over synthetic sandboxes with exact, checkable answers. Turn 1 is the main task, turn 2 a recall probe about an early detail, turns 3-4 follow-ups.",
+  "cases": [
+    {
+      "id": "audit-s11-small",
+      "family": "service_audit",
+      "seed": 11,
+      "size": "small",
+      "files": 9,
+      "corpus_tokens": 5885,
+      "files_sha256": "dfd4091d37449c566ab4e6d8a5c566f7f0c4d042b760ee2bb6d48846fd0713ef",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Audit the storefront platform in this sandbox. There are 8 service modules under services/ and each defines a SERVICE_CONFIG dict. Read every one of them: a value you have not read is unknown. Use SERVICE_CONFIG values (changelog comments are history, not config).\n1. List every service whose timeout_ms is greater than 2000, with its owner.\n2. Give the total max_connections over all services whose region is \"eu-west\".\n3. Among services whose depends_on includes \"auth\", which one has the most retries?\nFinish with a JSON object of exactly this form:\n{\"slow_services\": {\"<service>\": \"<owner>\"}, \"eu_west_max_connections\": <int>, \"most_retries_auth_dependent\": \"<service>\"}",
+          "expected": {
+            "slow_services": {
+              "media": "team-orion",
+              "sessions": "team-atlas"
+            },
+            "eu_west_max_connections": 840,
+            "most_retries_auth_dependent": "media"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "One more question about the audit: what port does the auth service listen on, and which services does it depend on? Answer with JSON: {\"port\": <int>, \"depends_on\": [\"<service>\"]}",
+          "expected": {
+            "port": 7777,
+            "depends_on": [
+              "media",
+              "shipping"
+            ]
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "Which owner team owns the most services, and how many does it own? Answer with JSON: {\"team\": \"<owner>\", \"count\": <int>}",
+          "expected": {
+            "team": "team-atlas",
+            "count": 5
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "List every service in region \"eu-west\" whose max_connections is at least 150. Answer with JSON: {\"services\": [\"<service>\"]}",
+          "expected": {
+            "services": [
+              "auth",
+              "notifications",
+              "webhooks"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "audit-s23-small",
+      "family": "service_audit",
+      "seed": 23,
+      "size": "small",
+      "files": 9,
+      "corpus_tokens": 5897,
+      "files_sha256": "fb6ec39e72ba064dff6c41db5742764a9e4920c9fadc5c1db9d7d7ad1f97d281",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Audit the storefront platform in this sandbox. There are 8 service modules under services/ and each defines a SERVICE_CONFIG dict. Read every one of them: a value you have not read is unknown. Use SERVICE_CONFIG values (changelog comments are history, not config).\n1. List every service whose timeout_ms is greater than 2000, with its owner.\n2. Give the total max_connections over all services whose region is \"eu-west\".\n3. Among services whose depends_on includes \"auth\", which one has the most retries?\nFinish with a JSON object of exactly this form:\n{\"slow_services\": {\"<service>\": \"<owner>\"}, \"eu_west_max_connections\": <int>, \"most_retries_auth_dependent\": \"<service>\"}",
+          "expected": {
+            "slow_services": {
+              "auth": "team-orion",
+              "catalog": "team-atlas",
+              "inventory": "team-ledger"
+            },
+            "eu_west_max_connections": 790,
+            "most_retries_auth_dependent": "catalog"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "One more question about the audit: what port does the analytics service listen on, and which services does it depend on? Answer with JSON: {\"port\": <int>, \"depends_on\": [\"<service>\"]}",
+          "expected": {
+            "port": 8466,
+            "depends_on": [
+              "auth"
+            ]
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "Which owner team owns the most services, and how many does it own? Answer with JSON: {\"team\": \"<owner>\", \"count\": <int>}",
+          "expected": {
+            "team": "team-orion",
+            "count": 3
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "List every service in region \"ap-south\" whose max_connections is at least 150. Answer with JSON: {\"services\": [\"<service>\"]}",
+          "expected": {
+            "services": [
+              "catalog",
+              "inventory",
+              "notifications"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "audit-s37-medium",
+      "family": "service_audit",
+      "seed": 37,
+      "size": "medium",
+      "files": 13,
+      "corpus_tokens": 11464,
+      "files_sha256": "7290a29b81a4b298d15bb2d6a3ce474430383473a533fa35580302f8faf314c0",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Audit the storefront platform in this sandbox. There are 12 service modules under services/ and each defines a SERVICE_CONFIG dict. Read every one of them: a value you have not read is unknown. Use SERVICE_CONFIG values (changelog comments are history, not config).\n1. List every service whose timeout_ms is greater than 2000, with its owner.\n2. Give the total max_connections over all services whose region is \"eu-west\".\n3. Among services whose depends_on includes \"auth\", which one has the most retries?\nFinish with a JSON object of exactly this form:\n{\"slow_services\": {\"<service>\": \"<owner>\"}, \"eu_west_max_connections\": <int>, \"most_retries_auth_dependent\": \"<service>\"}",
+          "expected": {
+            "slow_services": {
+              "auth": "team-vega",
+              "catalog": "team-atlas",
+              "loyalty": "team-vega",
+              "scheduler": "team-orion"
+            },
+            "eu_west_max_connections": 850,
+            "most_retries_auth_dependent": "recommendations"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "One more question about the audit: what port does the auth service listen on, and which services does it depend on? Answer with JSON: {\"port\": <int>, \"depends_on\": [\"<service>\"]}",
+          "expected": {
+            "port": 8550,
+            "depends_on": [
+              "loyalty",
+              "sessions"
+            ]
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "Which owner team owns the most services, and how many does it own? Answer with JSON: {\"team\": \"<owner>\", \"count\": <int>}",
+          "expected": {
+            "team": "team-atlas",
+            "count": 4
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "List every service in region \"eu-west\" whose max_connections is at least 150. Answer with JSON: {\"services\": [\"<service>\"]}",
+          "expected": {
+            "services": [
+              "fraud",
+              "sessions"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "incident-s11-small",
+      "family": "incident_trace",
+      "seed": 11,
+      "size": "small",
+      "files": 7,
+      "corpus_tokens": 5855,
+      "files_sha256": "634dd888d78e427455da3c1516e34014fed4fea09b10f4d4c2adab06c2bf31c4",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Customer order #8751 failed at checkout on 2026-11-20 around 14:05 UTC. The service logs are under logs/. Trace the failure to its root cause, following the ids from one service's log to the next; do not guess an id you have not read. Finish with a JSON object of exactly this form: {\"request_id\": \"...\", \"trace_id\": \"...\", \"txn_id\": \"...\", \"locked_table\": \"...\", \"blocking_job\": \"...\"}",
+          "expected": {
+            "request_id": "rq-80d5ec",
+            "trace_id": "tr-e853e9",
+            "txn_id": "tx-59788",
+            "locked_table": "ledger_entries",
+            "blocking_job": "payout-rollup"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "Follow-up: at exactly what timestamp did the gateway log that failed request, and what latency did it report? Answer with JSON: {\"gateway_timestamp\": \"...\", \"latency_ms\": <int>}",
+          "expected": {
+            "gateway_timestamp": "2026-11-20T14:05:52.582Z",
+            "latency_ms": 30049
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "A different checkout failed with HTTP 402 a few minutes before that incident. Which order was it, and what decline code did payments log? Answer with JSON: {\"order\": <int>, \"code\": \"...\"}",
+          "expected": {
+            "order": 8752,
+            "code": "card_declined"
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "According to the scheduler log, how long did the blocking job hold its lock, and what was its pid? Answer with JSON: {\"held\": \"...\", \"pid\": <int>}",
+          "expected": {
+            "held": "16m10s",
+            "pid": 7058
+          }
+        }
+      ]
+    },
+    {
+      "id": "incident-s23-small",
+      "family": "incident_trace",
+      "seed": 23,
+      "size": "small",
+      "files": 7,
+      "corpus_tokens": 5851,
+      "files_sha256": "5a7ca4ddfef663110bebe37e25c867f309c71318bfafd262a334fc587b137806",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Customer order #9000 failed at checkout on 2026-11-20 around 14:07 UTC. The service logs are under logs/. Trace the failure to its root cause, following the ids from one service's log to the next; do not guess an id you have not read. Finish with a JSON object of exactly this form: {\"request_id\": \"...\", \"trace_id\": \"...\", \"txn_id\": \"...\", \"locked_table\": \"...\", \"blocking_job\": \"...\"}",
+          "expected": {
+            "request_id": "rq-ef4d90",
+            "trace_id": "tr-dbbbcd",
+            "txn_id": "tx-46114",
+            "locked_table": "payouts",
+            "blocking_job": "payout-rollup"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "Follow-up: at exactly what timestamp did the gateway log that failed request, and what latency did it report? Answer with JSON: {\"gateway_timestamp\": \"...\", \"latency_ms\": <int>}",
+          "expected": {
+            "gateway_timestamp": "2026-11-20T14:07:32.937Z",
+            "latency_ms": 30026
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "A different checkout failed with HTTP 402 a few minutes before that incident. Which order was it, and what decline code did payments log? Answer with JSON: {\"order\": <int>, \"code\": \"...\"}",
+          "expected": {
+            "order": 9001,
+            "code": "card_declined"
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "According to the scheduler log, how long did the blocking job hold its lock, and what was its pid? Answer with JSON: {\"held\": \"...\", \"pid\": <int>}",
+          "expected": {
+            "held": "16m10s",
+            "pid": 2543
+          }
+        }
+      ]
+    },
+    {
+      "id": "incident-s37-medium",
+      "family": "incident_trace",
+      "seed": 37,
+      "size": "medium",
+      "files": 9,
+      "corpus_tokens": 10403,
+      "files_sha256": "4ad4fff27bf9f9f9114c7018003878b0c336b813a68c7490e95ac85cbafc2d58",
+      "turns": [
+        {
+          "kind": "task",
+          "question": "Customer order #8172 failed at checkout on 2026-11-20 around 14:04 UTC. The service logs are under logs/. Trace the failure to its root cause, following the ids from one service's log to the next; do not guess an id you have not read. Finish with a JSON object of exactly this form: {\"request_id\": \"...\", \"trace_id\": \"...\", \"txn_id\": \"...\", \"locked_table\": \"...\", \"blocking_job\": \"...\"}",
+          "expected": {
+            "request_id": "rq-ef310b",
+            "trace_id": "tr-974049",
+            "txn_id": "tx-15464",
+            "locked_table": "ledger_entries",
+            "blocking_job": "payout-rollup"
+          }
+        },
+        {
+          "kind": "probe",
+          "question": "Follow-up: at exactly what timestamp did the gateway log that failed request, and what latency did it report? Answer with JSON: {\"gateway_timestamp\": \"...\", \"latency_ms\": <int>}",
+          "expected": {
+            "gateway_timestamp": "2026-11-20T14:04:19.988Z",
+            "latency_ms": 30005
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "A different checkout failed with HTTP 402 a few minutes before that incident. Which order was it, and what decline code did payments log? Answer with JSON: {\"order\": <int>, \"code\": \"...\"}",
+          "expected": {
+            "order": 8173,
+            "code": "card_declined"
+          }
+        },
+        {
+          "kind": "followup",
+          "question": "According to the scheduler log, how long did the blocking job hold its lock, and what was its pid? Answer with JSON: {\"held\": \"...\", \"pid\": <int>}",
+          "expected": {
+            "held": "16m10s",
+            "pid": 6370
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,839 @@
+{
+  "meta": {
+    "model": "openai/gpt-oss-120b",
+    "provider": "groq",
+    "size": "medium",
+    "seed": 7,
+    "window": 6000,
+    "baseline_window": null,
+    "no_probe": false,
+    "date": "2026-11-23 23:57",
+    "versions": {
+      "langchain": "1.5.2",
+      "langchain-core": "1.8.4",
+      "langchain-groq": "1.2.1",
+      "langgraph": "1.2.24"
+    },
+    "tasks": {
+      "service_audit": {
+        "files": 13,
+        "corpus_tokens": 11646
+      },
+      "incident_trace": {
+        "files": 9,
+        "corpus_tokens": 10415
+      }
+    }
+  },
+  "runs": [
+    {
+      "task": "service_audit",
+      "arm": "baseline",
+      "status": "request_too_large",
+      "error": "APIStatusError: Error code: 413 - {'error': {'message': 'Request too large for model `openai/gpt-oss-120b` in organization `org_<redacted>` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8649, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exc",
+      "failed_in": "main",
+      "answer": null,
+      "probe_answer": null,
+      "wall_s": 167.5,
+      "score": 0.0,
+      "score_detail": {
+        "parsed": false
+      },
+      "probe_score": 0.0,
+      "probe_detail": {},
+      "model_calls": 9,
+      "main_calls": 9,
+      "per_call_input": [
+        393,
+        574,
+        1569,
+        2594,
+        3534,
+        4496,
+        5558,
+        6529,
+        7557
+      ],
+      "input_tokens_total": 32804,
+      "input_tokens_peak": 7557,
+      "output_tokens_total": 519,
+      "read_file_calls": 8,
+      "re_reads": 0,
+      "probe_file_reads": 0,
+      "compress_calls": 0,
+      "recall_calls": 0,
+      "search_calls": 0,
+      "nudged_calls": 0,
+      "transient_errors": 1,
+      "calls": [
+        {
+          "input_tokens": 393,
+          "output_tokens": 35,
+          "messages_sent": 1,
+          "latency_s": 0.51,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 574,
+          "output_tokens": 42,
+          "messages_sent": 3,
+          "latency_s": 0.54,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/analytics.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 1569,
+          "output_tokens": 137,
+          "messages_sent": 5,
+          "latency_s": 0.64,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/auth.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2594,
+          "output_tokens": 50,
+          "messages_sent": 7,
+          "latency_s": 0.79,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/billing.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3534,
+          "output_tokens": 55,
+          "messages_sent": 9,
+          "latency_s": 6.62,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/fraud.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 4496,
+          "output_tokens": 55,
+          "messages_sent": 11,
+          "latency_s": 34.39,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/gateway.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 5558,
+          "output_tokens": 52,
+          "messages_sent": 13,
+          "latency_s": 16.83,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/media.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 6529,
+          "output_tokens": 51,
+          "messages_sent": 15,
+          "latency_s": 49.92,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/notifications.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 7557,
+          "output_tokens": 42,
+          "messages_sent": 17,
+          "latency_s": 57.13,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/payments.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        }
+      ]
+    },
+    {
+      "task": "service_audit",
+      "arm": "compact",
+      "status": "daily_quota",
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_<redacted>` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195838, Requested 5071. Please try again in 6m32.688s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceed",
+      "failed_in": "main",
+      "answer": null,
+      "probe_answer": null,
+      "wall_s": 766.5,
+      "score": 0.0,
+      "score_detail": {
+        "parsed": false
+      },
+      "probe_score": 0.0,
+      "probe_detail": {},
+      "model_calls": 26,
+      "main_calls": 26,
+      "per_call_input": [
+        865,
+        1050,
+        2049,
+        3161,
+        2163,
+        2348,
+        3430,
+        4369,
+        2234,
+        2419,
+        3501,
+        4568,
+        4753,
+        2635,
+        3717,
+        2754,
+        2939,
+        3988,
+        5012,
+        2952,
+        3137,
+        4286,
+        4012,
+        4197,
+        3346,
+        3792
+      ],
+      "input_tokens_total": 83677,
+      "input_tokens_peak": 5012,
+      "output_tokens_total": 4581,
+      "read_file_calls": 13,
+      "re_reads": 6,
+      "probe_file_reads": 0,
+      "compress_calls": 4,
+      "recall_calls": 1,
+      "search_calls": 1,
+      "nudged_calls": 8,
+      "transient_errors": 4,
+      "calls": [
+        {
+          "input_tokens": 865,
+          "output_tokens": 39,
+          "messages_sent": 1,
+          "latency_s": 0.72,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 1050,
+          "output_tokens": 85,
+          "messages_sent": 3,
+          "latency_s": 0.34,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/analytics.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2049,
+          "output_tokens": 59,
+          "messages_sent": 5,
+          "latency_s": 0.68,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/auth.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3161,
+          "output_tokens": 409,
+          "messages_sent": 7,
+          "latency_s": 23.57,
+          "tool_calls": [
+            {
+              "name": "compress_context",
+              "args": {
+                "end_ref": "m0005",
+                "start_ref": "m0002",
+                "summary": "Listed services directory with 12 files. Read analytics.py and auth.py. Extracted SERVICE_CONFIG:\n- analytics: name analytics, owner team-orion, region eu-west, timeout_ms 1800, retries 5, max_connections 70, depends_on [payments, scheduler]\n- auth: name auth, owner team-atlas, region eu-west, timeout_ms 800, retries 4, max_connections 120, depends_on [payments]\nThese values stored for later calculations.",
+                "topic": "initial files analytics and auth"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2163,
+          "output_tokens": 54,
+          "messages_sent": 5,
+          "latency_s": 18.53,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2348,
+          "output_tokens": 151,
+          "messages_sent": 7,
+          "latency_s": 20.09,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/analytics.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3430,
+          "output_tokens": 193,
+          "messages_sent": 9,
+          "latency_s": 24.12,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/billing.py"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 4369,
+          "output_tokens": 482,
+          "messages_sent": 11,
+          "latency_s": 38.45,
+          "tool_calls": [
+            {
+              "name": "compress_context",
+              "args": {
+                "end_ref": "m0013",
+                "start_ref": "m0006",
+                "summary": "Extracted SERVICE_CONFIG values:\n- auth: name='auth', owner='team-atlas', region='eu-west', timeout_ms=800, retries=4, max_connections=120, depends_on=['payments']\n- analytics: name='analytics', owner='team-orion', region='eu-west', timeout_ms=1800, retries=5, max_connections=70, depends_on=['payments','scheduler']\n- billing: name='billing', owner='team-hermes', region='ap-south', timeout_ms=4000, retries=4, max_connections=230, depends_on=['fraud','search']",
+                "topic": "service configs auth analytics billing"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2234,
+          "output_tokens": 57,
+          "messages_sent": 5,
+          "latency_s": 16.54,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2419,
+          "output_tokens": 192,
+          "messages_sent": 7,
+          "latency_s": 18.8,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/analytics.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3501,
+          "output_tokens": 116,
+          "messages_sent": 9,
+          "latency_s": 13.14,
+          "tool_calls": [
+            {
+              "name": "recall_context",
+              "args": {
+                "target": "b002"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 4568,
+          "output_tokens": 158,
+          "messages_sent": 5,
+          "latency_s": 35.38,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": [
+            "b003"
+          ]
+        },
+        {
+          "input_tokens": 4753,
+          "output_tokens": 70,
+          "messages_sent": 7,
+          "latency_s": 35.3,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/billing.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2635,
+          "output_tokens": 75,
+          "messages_sent": 5,
+          "latency_s": 18.65,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/analytics.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": [
+            "b004"
+          ]
+        },
+        {
+          "input_tokens": 3717,
+          "output_tokens": 423,
+          "messages_sent": 7,
+          "latency_s": 27.67,
+          "tool_calls": [
+            {
+              "name": "compress_context",
+              "args": {
+                "end_ref": "m0027",
+                "start_ref": "m0024",
+                "summary": "Listed services directory with 12 files. Read billing.py and analytics.py. Extracted SERVICE_CONFIG:\n- billing: name='billing', owner='team-hermes', region='ap-south', timeout_ms=4000, retries=4, max_connections=230, depends_on=['fraud','search']\n- analytics: name='analytics', owner='team-orion', region='eu-west', timeout_ms=1800, retries=5, max_connections=70, depends_on=['payments','scheduler']",
+                "topic": "list and read billing and analytics"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2754,
+          "output_tokens": 71,
+          "messages_sent": 5,
+          "latency_s": 24.65,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2939,
+          "output_tokens": 113,
+          "messages_sent": 7,
+          "latency_s": 18.98,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/fraud.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3988,
+          "output_tokens": 180,
+          "messages_sent": 9,
+          "latency_s": 27.19,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/auth.py"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 5012,
+          "output_tokens": 521,
+          "messages_sent": 11,
+          "latency_s": 39.83,
+          "tool_calls": [
+            {
+              "name": "compress_context",
+              "args": {
+                "end_ref": "m0035",
+                "start_ref": "m0028",
+                "summary": "Read analytics.py and fraud.py and listed services directory. Extracted SERVICE_CONFIG values:\n- analytics: timeout_ms=1800, owner='team-orion', region='eu-west', max_connections=70, retries=5, depends_on=['payments','scheduler']\n- fraud: timeout_ms=1800, owner='team-atlas', region='ap-south', max_connections=100, retries=2, depends_on=['auth','scheduler']\n- services directory contains 12 files: analytics.py, auth.py, billing.py, fraud.py, gateway.py, media.py, notifications.py, payments.py, recommendations.py, reviews.py, scheduler.py, search.py",
+                "topic": "read analytics and fraud and list files"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 2952,
+          "output_tokens": 74,
+          "messages_sent": 5,
+          "latency_s": 19.53,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3137,
+          "output_tokens": 146,
+          "messages_sent": 7,
+          "latency_s": 20.93,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/gateway.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 4286,
+          "output_tokens": 329,
+          "messages_sent": 9,
+          "latency_s": 32.06,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/media.py"
+              }
+            }
+          ],
+          "nudged": true,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 4012,
+          "output_tokens": 82,
+          "messages_sent": 5,
+          "latency_s": 24.28,
+          "tool_calls": [
+            {
+              "name": "list_files",
+              "args": {
+                "directory": "services"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": [
+            "b007"
+          ]
+        },
+        {
+          "input_tokens": 4197,
+          "output_tokens": 88,
+          "messages_sent": 7,
+          "latency_s": 30.08,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/notifications.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        },
+        {
+          "input_tokens": 3346,
+          "output_tokens": 165,
+          "messages_sent": 5,
+          "latency_s": 24.85,
+          "tool_calls": [
+            {
+              "name": "search_context",
+              "args": {
+                "query": "SERVICE_CONFIG = {"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": [
+            "b008"
+          ]
+        },
+        {
+          "input_tokens": 3792,
+          "output_tokens": 249,
+          "messages_sent": 7,
+          "latency_s": 30.27,
+          "tool_calls": [
+            {
+              "name": "read_file",
+              "args": {
+                "path": "services/auth.py"
+              }
+            }
+          ],
+          "nudged": false,
+          "auto_folds": []
+        }
+      ],
+      "compaction": {
+        "folds_model": 4,
+        "folds_auto": 4,
+        "max_tier": 1,
+        "tokens_replaced": 14989,
+        "summary_tokens": 982,
+        "active_blocks": 8,
+        "token_ratio": 0.981,
+        "nudges": 9,
+        "forced": 3,
+        "recalls": 1,
+        "searches": 1,
+        "rejected_folds": 0
+      },
+      "folds": [
+        {
+          "id": "b001",
+          "tier": 1,
+          "span": "m0002-m0005",
+          "topic": "initial files analytics and auth",
+          "auto": false,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 1165,
+          "summary_tokens": 98,
+          "original_tokens": 1157,
+          "created_at_call": 4,
+          "summary": "Listed services directory with 12 files. Read analytics.py and auth.py. Extracted SERVICE_CONFIG:\n- analytics: name analytics, owner team-orion, region eu-west, timeout_ms 1800, retries 5, max_connections 70, depends_on [payments, scheduler]\n- auth: name auth, owner team-atlas, region eu-west, timeout_ms 800, retries 4, max_connections 120, depends_on [payments]\nThese values stored for later calculations."
+        },
+        {
+          "id": "b002",
+          "tier": 1,
+          "span": "m0006-m0013",
+          "topic": "service configs auth analytics billing",
+          "auto": false,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 2384,
+          "summary_tokens": 125,
+          "original_tokens": 2368,
+          "created_at_call": 8,
+          "summary": "Extracted SERVICE_CONFIG values:\n- auth: name='auth', owner='team-atlas', region='eu-west', timeout_ms=800, retries=4, max_connections=120, depends_on=['payments']\n- analytics: name='analytics', owner='team-orion', region='eu-west', timeout_ms=1800, retries=5, max_connections=70, depends_on=['payments','scheduler']\n- billing: name='billing', owner='team-hermes', region='ap-south', timeout_ms=4000, retries=4, max_connections=230, depends_on=['fraud','search']"
+        },
+        {
+          "id": "b003",
+          "tier": 1,
+          "span": "m0014-m0019",
+          "topic": "auto-folded at context limit",
+          "auto": true,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 1339,
+          "summary_tokens": 130,
+          "original_tokens": 1327,
+          "created_at_call": 12,
+          "summary": "(Auto-folded by the context manager at the context limit. This is a lossy preview; exact text is archived: use search_context or recall_context.)\n- m0015 read_file(path='services/billing.py') -> \"\"\"billing service for the storefront platform. Owned by team-hermes. Generated scaffolding plus hand-written handlers. \"\"\" from __future__\u2026 [915 tok]\n- m0019 list_files(directory='services') -> services/analytics.py (112 lines, ~966 tokens) services/auth.py (124 lines, ~997 tokens) services/billing.py (116 lines, ~911 tokens) servi\u2026 [160 tok]"
+        },
+        {
+          "id": "b004",
+          "tier": 1,
+          "span": "m0020-m0023",
+          "topic": "auto-folded at context limit",
+          "auto": true,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 3209,
+          "summary_tokens": 136,
+          "original_tokens": 3201,
+          "created_at_call": 14,
+          "summary": "(Auto-folded by the context manager at the context limit. This is a lossy preview; exact text is archived: use search_context or recall_context.)\n- m0021 read_file(path='services/analytics.py') -> \"\"\"analytics service for the storefront platform. Owned by team-orion. Generated scaffolding plus hand-written handlers. \"\"\" from __future_\u2026 [970 tok]\n- m0023 recall_context(target='b002') -> Archived originals (read-only; the range stays folded): [m0006] ai: read_file({\"path\": \"services/auth.py\"}) [m0007] tool: \"\"\"auth service f\u2026 [2,202 tok]"
+        },
+        {
+          "id": "b005",
+          "tier": 1,
+          "span": "m0024-m0027",
+          "topic": "list and read billing and analytics",
+          "auto": false,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 1110,
+          "summary_tokens": 102,
+          "original_tokens": 1102,
+          "created_at_call": 15,
+          "summary": "Listed services directory with 12 files. Read billing.py and analytics.py. Extracted SERVICE_CONFIG:\n- billing: name='billing', owner='team-hermes', region='ap-south', timeout_ms=4000, retries=4, max_connections=230, depends_on=['fraud','search']\n- analytics: name='analytics', owner='team-orion', region='eu-west', timeout_ms=1800, retries=5, max_connections=70, depends_on=['payments','scheduler']"
+        },
+        {
+          "id": "b006",
+          "tier": 1,
+          "span": "m0028-m0035",
+          "topic": "read analytics and fraud and list files",
+          "auto": false,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 2326,
+          "summary_tokens": 133,
+          "original_tokens": 2310,
+          "created_at_call": 19,
+          "summary": "Read analytics.py and fraud.py and listed services directory. Extracted SERVICE_CONFIG values:\n- analytics: timeout_ms=1800, owner='team-orion', region='eu-west', max_connections=70, retries=5, depends_on=['payments','scheduler']\n- fraud: timeout_ms=1800, owner='team-atlas', region='ap-south', max_connections=100, retries=2, depends_on=['auth','scheduler']\n- services directory contains 12 files: analytics.py, auth.py, billing.py, fraud.py, gateway.py, media.py, notifications.py, payments.py, recommendations.py, reviews.py, scheduler.py, search.py"
+        },
+        {
+          "id": "b007",
+          "tier": 1,
+          "span": "m0036-m0041",
+          "topic": "auto-folded at context limit",
+          "auto": true,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 1435,
+          "summary_tokens": 132,
+          "original_tokens": 1423,
+          "created_at_call": 23,
+          "summary": "(Auto-folded by the context manager at the context limit. This is a lossy preview; exact text is archived: use search_context or recall_context.)\n- m0037 read_file(path='services/auth.py') -> \"\"\"auth service for the storefront platform. Owned by team-atlas. Generated scaffolding plus hand-written handlers. \"\"\" from __future__ imp\u2026 [1,001 tok]\n- m0041 list_files(directory='services') -> services/analytics.py (112 lines, ~966 tokens) services/auth.py (124 lines, ~997 tokens) services/billing.py (116 lines, ~911 tokens) servi\u2026 [160 tok]"
+        },
+        {
+          "id": "b008",
+          "tier": 1,
+          "span": "m0042-m0045",
+          "topic": "auto-folded at context limit",
+          "auto": true,
+          "active": true,
+          "children": [],
+          "replaced_tokens": 2021,
+          "summary_tokens": 126,
+          "original_tokens": 2013,
+          "created_at_call": 25,
+          "summary": "(Auto-folded by the context manager at the context limit. This is a lossy preview; exact text is archived: use search_context or recall_context.)\n- m0043 read_file(path='services/gateway.py') -> \"\"\"gateway service for the storefront platform. Owned by team-atlas. Generated scaffolding plus hand-written handlers. \"\"\" from __future__ \u2026 [1,037 tok]\n- m0045 read_file(path='services/media.py') -> \"\"\"media service for the storefront platform. Owned by team-nova. Generated scaffolding plus hand-written handlers. \"\"\" from __future__ imp\u2026 [947 tok]"
+        }
+      ]
+    }
+  ]
+}

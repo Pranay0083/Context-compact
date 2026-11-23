@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+results/**/archive-*.sqlite
+.DS_Store
+results/*demo-offline*/
+web/node_modules/
+web/.next/

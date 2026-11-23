@@ -102,7 +102,8 @@ Each of these showed up in live runs on Groq's free models; the first four chang
    re-reads). Next: keep the lines that carry numbers, ids and key = value pairs, or write the fold
    with a small summarising call when the model refuses.
 6. **Open: our own paging hint caused a recall loop.** A truncated `recall_context` result says
-   "continue with recall_context('m…')". Qwen followed it 22 times in a row instead of answering.
+   "continue with recall_context('m…')". Qwen followed it 22 times in a row, 31 times in all, until the
+   request overflowed the window, without ever answering.
    Next: drop the hint, point to `search_context`, and refuse a repeat recall of the same range.
 
 ### Relation to billion-context
@@ -284,9 +285,14 @@ Raw data in `results/`. A small number of runs: read them as a demonstration, no
 | Folds | none needed | 0 by the model (all 5 forced folds refused), 4 auto |
 | Re-reads | 0 | 13: restarted after every auto-fold |
 
-**Same case, `qwen/qwen3.8-27b`**: the plain agent read all 8 files in one step, and its next request
-(7,538 tokens) broke Qwen's 7,000-token input cap: 0 of 4. The compacting agent read all 8 files and
-folded 3 times itself, then called `recall_context` 22 times in a row without answering.
+**`qwen/qwen3.8-27b`** (`results/20261124-003635-…`, current design)
+
+| Golden case | Plain agent | With compactor (window 6,000) |
+|---|---|---|
+| `audit-s11-small` | 0 of 4: read all 8 files in one step; the next request (7,538 tokens) broke Qwen's 7,000-token input cap | 0 of 4: **context overflow** after 42 calls and 163,623 input tokens; 6 folds by the model, 20 auto, 31 `recall_context` calls |
+| `audit-s23-small` | 0 of 4: same failure on request 2 | 0 of 4: daily quota ran out after 10 calls |
+
+The other cases are pending: Qwen's daily quota ran out (`--resume` continues the run).
 
 **Takeaways.** Compaction keeps every request under the ceiling where the plain agent dies (the
 medium task), and model-written folds compress tool output 15–19× while keeping exact values. But
